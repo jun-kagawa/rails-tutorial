@@ -13,24 +13,24 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         name: "",
         email: "user@invalid",
         password: "foo",
-        password_confirmation: "bar",
-      }}
+        password_confirmation: "bar"
+      } }
     end
 
     assert_response :unprocessable_entity
-    assert_template 'users/new'
-    assert_select 'div#error_explanation'
-    assert_select 'div.alert'
+    assert_template "users/new"
+    assert_select "div#error_explanation"
+    assert_select "div.alert"
   end
 
   test "valid signup information" do
-    assert_difference 'User.count', 1 do
+    assert_difference "User.count", 1 do
       post users_path, params: { user: {
         name: "Example User",
         email: "user@example.com",
         password: "password",
         password_confirmation: "password"
-      }}
+      } }
     end
 
     follow_redirect!
@@ -47,7 +47,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     patch user_path(@user), params: { user: {
       name: @user.name,
       email: @user.email
-    }}
+    } }
 
     assert_not flash.empty?
     assert_redirected_to login_url
@@ -64,8 +64,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@other_user)
     patch user_path(@user), params: { user: {
       name: @user.name,
-      email: @user.email,
-    }}
+      email: @user.email
+    } }
     assert flash.empty?
     assert_redirected_to root_url
   end
@@ -81,14 +81,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     patch user_path(@other_user), params: { user: {
       password: "password",
       password_confirmation: "password",
-      admin: true,
-    }}
+      admin: true
+    } }
 
     assert_not @other_user.reload.admin?
   end
 
   test "should redirect destroy when not logged in" do
-    assert_no_difference 'User.count' do
+    assert_no_difference "User.count" do
       delete user_path(@user)
     end
     assert_response :see_other
@@ -97,7 +97,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should redirect destroy when logged in as a non-admin" do
     log_in_as(@other_user)
-    assert_no_difference 'User.count' do
+    assert_no_difference "User.count" do
       delete user_path(@user)
     end
     assert_response :see_other

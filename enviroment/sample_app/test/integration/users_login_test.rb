@@ -9,14 +9,14 @@ end
 class InvalidPasswordTest < UsersLogin
   test "login path" do
     get login_path
-    assert_template 'sessions/new'
+    assert_template "sessions/new"
   end
 
   test "login with valid email/invalid password" do
-    post login_path, params: { session: { email: @user.email, password: 'invalid'}}
+    post login_path, params: { session: { email: @user.email, password: "invalid" } }
     assert_not is_logged_in?
     assert_response :unprocessable_entity
-    assert_template 'sessions/new'
+    assert_template "sessions/new"
     assert_not flash.empty?
     get root_path
     assert flash.empty?
@@ -28,8 +28,8 @@ class ValidLogin < UsersLogin
     super
     post login_path, params: { session: {
       email: @user.email,
-      password: 'password',
-    }}
+      password: "password"
+    } }
   end
 end
 
@@ -41,7 +41,7 @@ class ValidLoginTest < ValidLogin
 
   test "redirect after login" do
     follow_redirect!
-    assert_template 'users/show'
+    assert_template "users/show"
     assert_select "a[href=?]", login_path, count: 0
     assert_select "a[href=?]", logout_path
     assert_select "a[href=?]", user_path(@user)
@@ -71,15 +71,14 @@ class LogoutTest < Logout
 end
 
 class RememberingTest < UsersLogin
-  
   test "login with remembering" do
-    log_in_as(@user, remember_me: '1')
+    log_in_as(@user, remember_me: "1")
     assert_not cookies[:remember_token].blank?
   end
 
   test "login without remembering" do
-    log_in_as(@user, remember_me: '1')
-    log_in_as(@user, remember_me: '0')
+    log_in_as(@user, remember_me: "1")
+    log_in_as(@user, remember_me: "0")
     assert cookies[:remember_token].blank?
   end
 end

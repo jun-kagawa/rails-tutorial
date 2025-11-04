@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class MicropostsControllerTest < ActionDispatch::IntegrationTest
   def setup
@@ -6,14 +6,14 @@ class MicropostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should redirect create when logged in" do
-    assert_no_difference 'Micropost.count' do
-      post microposts_path, params: { micropost: { content: 'Lorem ipsum'}}
+    assert_no_difference "Micropost.count" do
+      post microposts_path, params: { micropost: { content: "Lorem ipsum" } }
     end
     assert_redirected_to login_url
   end
 
   test "should redirect destroy when not logged in" do
-    assert_no_difference 'Micropost.count' do
+    assert_no_difference "Micropost.count" do
       delete micropost_path(@micropost)
     end
     assert_response :see_other
@@ -23,7 +23,7 @@ class MicropostsControllerTest < ActionDispatch::IntegrationTest
   test "should redirect destroy fro wrong micropost" do
     log_in_as(users(:michael))
     micropost = microposts(:ants)
-    assert_no_difference 'Micropost.count' do
+    assert_no_difference "Micropost.count" do
       delete micropost_path(micropost)
     end
 
