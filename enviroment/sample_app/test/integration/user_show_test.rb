@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class UsersShowTest < ActionDispatch::IntegrationTest
   def setup
@@ -15,6 +15,6 @@ class UsersShowTest < ActionDispatch::IntegrationTest
   test "should display user when activated" do
     get user_path(@activated_user)
     assert_response :success
-    assert_template 'users/show'
+    assert_template "users/show"
   end
 end

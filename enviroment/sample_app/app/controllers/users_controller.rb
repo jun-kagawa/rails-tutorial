@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :update, :index, :destroy, :following, :followers]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :logged_in_user, only: [ :edit, :update, :index, :destroy, :following, :followers ]
+  before_action :correct_user, only: [ :edit, :update ]
   before_action :admin_user, only: :destroy
 
   def show
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
     else
-      render 'new', status: :unprocessable_entity
+      render "new", status: :unprocessable_entity
     end
   end
 
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
       flash[:success] = "Profile updated"
       redirect_to @user
     else
-      render 'edit', status: :unprocessable_entity
+      render "edit", status: :unprocessable_entity
     end
   end
 
@@ -48,14 +48,14 @@ class UsersController < ApplicationController
     @title = "Following"
     @user = User.find(params[:id])
     @users = @user.following.paginate(page: params[:page])
-    render 'show_follow'
+    render "show_follow"
   end
 
   def followers
     @title = "Followers"
     @user = User.find(params[:id])
     @users = @user.followers.paginate(page: params[:page])
-    render 'show_follow'
+    render "show_follow"
   end
 
   private
